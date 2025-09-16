@@ -2,16 +2,25 @@
 const iconPickerInput = new IconPicker('input', {
     theme: 'bootstrap-5',
     iconSource: [
-        'Iconoir',
-        'FontAwesome Solid 6',
         {
-            key: 'gg',
-            prefix: 'gg-',
-            url: 'https://raw.githubusercontent.com/iconify/icon-sets/master/json/gg.json'
+            key: 'Material Symbols',
+            prefix: 'md md-',
+            url: 'https://raw.githubusercontent.com/iconify/icon-sets/master/json/material-symbols.json'
         }
     ],
+    // iconSource: [
+    //     'Iconoir',
+    //     'FontAwesome Solid 6',
+    //     {
+    //         key: 'gg',
+    //         prefix: 'gg-',
+    //         url: 'https://raw.githubusercontent.com/iconify/icon-sets/master/json/gg.json'
+    //     }
+    // ],
     closeOnSelect: true
 });
+
+
 
 const iconElementInput = document.querySelector('.input-group-text');
 iconPickerInput.on('select', (icon) => {

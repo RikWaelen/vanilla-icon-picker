@@ -1,3 +1,8 @@
+## Forked from appolodev/vanilla-icon-picker
+https://github.com/AppoloDev/vanilla-icon-picker
+
+-- added virtualization for significantly increased performance with large icon libraries
+
 # Vanilla icon picker
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/appolodev/icon-picker?color=blue&style=flat-square)

@@ -1,8 +1,11 @@
 import * as _ from "./utlis/utils";
+import VirtualIconGrid from "./utlis/virtualIconGrid";
 import template from "./template";
 import { resolveCollection } from "./utlis/collections";
 
 export default class IconPicker {
+    virtualIconGrid = null;
+    availableIcons = [];
     static DEFAULT_OPTIONS = {
         theme: 'default',
         closeOnSelect: true,
@@ -48,6 +51,22 @@ export default class IconPicker {
         } else {
             this._catchError('iconSourceMissing');
         }
+
+    }
+
+    renderItem(icon) {
+        // Customize how each icon renders
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `icon-element ${icon.value}`; // keep your class for styles
+        btn.title = icon.value;
+        btn.setAttribute('aria-label', icon.value);
+        // Example inner content; adjust to your icon system
+        btn.innerHTML = icon.body;
+        // Selection behavior
+        btn.addEventListener('click', (evt) => icon.onSelect && icon.onSelect(evt));
+        
+        return btn;
     }
 
     _preBuild() {
@@ -57,51 +76,54 @@ export default class IconPicker {
         if (!Array.isArray(this.options.iconSource) && this.options.iconSource.length > 0) {
             this.options.iconSource = [this.options.iconSource];
         }
+        // Prepare (lazy) virtual grid; mount after modal becomes visible to get correct widths
+        this.virtualIconGrid = this.virtualIconGrid || new VirtualIconGrid({
+            container: this.root.content,
+            items: this.availableIcons ?? [],
+            renderItem: (icon) => this.renderItem(icon),
+            i18nEmpty: this.options.i18n['text:empty'],
+            estimateItemSize: { width: 32, height: 32 }, // tweak to your tile size
+            bufferRows: 4
+        });
     }
 
+    ensureVirtualMounted = () => {
+        // If modal just opened, wait a frame so it has layout/width
+        requestAnimationFrame(() => {
+        if (!this.virtualIconGrid._mounted) {
+            this.virtualIconGrid.mount();
+        } else {
+            // Recompute columns/height if container size changed while hidden
+            this.virtualIconGrid._onResize && this.virtualIconGrid._onResize();
+        }
+        // Apply whatever is currently in the search box
+        const q = (this.root.search?.value || '').trim().toLowerCase();
+        this.virtualIconGrid.setQuery(q);
+        this.virtualIconGrid.setItems(this.availableIcons);
+        });
+    };
+
+
     _binEvents() {
-        const {options, root, element} = this;
-        let iconsElements = [];
+        const {options, root, element, virtualIconGrid} = this;
+
+        const onSearch = _.debounce((evt) => {
+            const q = (evt.target.value || '').trim().toLowerCase();
+            if (virtualIconGrid) virtualIconGrid.setQuery(q);
+        }, 120);
 
         this._eventBindings = [
-            _.addEvent(element, 'click', () => this.show()),
+            _.addEvent(element, 'click', () => { 
+                this.show(); 
+                this.ensureVirtualMounted(); 
+            }),
             _.addEvent(root.close, 'click', () => this.hide()),
             _.addEvent(root.modal, 'click', (evt) => {
                 if (evt.target === root.modal) {
                     this.hide();
                 }
             }),
-            _.addEvent(root.search, 'keyup', _.debounce((evt) => {
-                const iconsResult = this.availableIcons.filter((obj) => {
-                    return obj.value.includes(evt.target.value.toLowerCase()) || obj.categories?.filter(c => c.includes(evt.target.value.toLowerCase())).length > 0
-                });
-
-                if (!iconsElements.length) {
-                    iconsElements = document.querySelectorAll('.icon-element');
-                }
-
-                iconsElements.forEach((iconElement) => {
-                    iconElement.hidden = true;
-
-                    iconsResult.forEach((result) => {
-                        if (iconElement.classList.contains(result.value)) {
-                            iconElement.hidden = false;
-                        }
-                    });
-                });
-
-                const emptyElement = root.content.querySelector('.is-empty');
-
-                if (iconsResult.length > 0) {
-                    if (emptyElement) {
-                        emptyElement.remove();
-                    }
-                } else {
-                    if (!emptyElement) {
-                        root.content.appendChild(_.stringToHTML(`<div class="is-empty">${options.i18n['text:empty']}</div>`));
-                    }
-                }
-            }, 250))
+            _.addEvent(root.search, 'keyup', _.debounce(onSearch, 250))
         ];
 
         if (!options.closeOnSelect) {
@@ -272,14 +294,7 @@ export default class IconPicker {
                     iconElement.innerHTML = value.body;
                 }
 
-                iconTarget.append(iconElement)
-
-                root.content.appendChild(iconTarget);
-
-                this.availableIcons.push({value: key, body: iconElement.outerHTML, ...(categories?.length > 0 && {categories})});
-
-                // Icon click event
-                iconTarget.addEventListener('click', (evt) => {
+                this.availableIcons.push({value: key, body: iconElement.outerHTML, ...(categories?.length > 0 && {categories}), onSelect: (evt) => {
                     if (this.currentlySelectName !== evt.currentTarget.firstChild.className) {
                         evt.currentTarget.classList.add('is-selected');
 
@@ -309,7 +324,7 @@ export default class IconPicker {
                     }
 
                     previousSelectedIcon = currentlySelectElement;
-                });
+                }});
             }
         });
 

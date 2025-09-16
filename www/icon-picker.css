@@ -17,3 +17,7 @@ body {
 .icon-selected-text {
     font-size: 1rem;
 }
+.virtual-scroll { overflow: auto; position: relative; }
+.vs-inner { position: relative; width: 100%; }
+.vs-item { position: absolute; }
+.is-empty { padding: 1rem; color: #666; }
