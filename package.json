@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-icon-picker",
+  "name": "vanilla-icon-picker-virtualized",
   "version": "0.0.1",
   "description": "Icon picker - Vanilla JS icon picker with virtualization",
   "keywords": [
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/RikWaelen/vanilla-icon-picker#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RikWaelen/vanilla-icon-picker.git"
+    "url": "git+https://github.com/RikWaelen/vanilla-icon-picker.git"
   },
   "bugs": {
     "url": "https://github.com/RikWaelen/vanilla-icon-picker/issues"
