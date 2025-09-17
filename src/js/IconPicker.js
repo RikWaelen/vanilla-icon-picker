@@ -54,6 +54,24 @@ export default class IconPicker {
 
     }
 
+    _preBuild() {
+        this.element = _.resolveElement(this.element);
+        this.root = template(this.options);
+
+        if (!Array.isArray(this.options.iconSource) && this.options.iconSource.length > 0) {
+            this.options.iconSource = [this.options.iconSource];
+        }
+        // Prepare (lazy) virtual grid; mount after modal becomes visible to get correct widths
+        this.virtualIconGrid = this.virtualIconGrid || new VirtualIconGrid({
+            container: this.root.content,
+            items: this.availableIcons ?? [],
+            renderItem: (icon) => this.renderItem(icon),
+            i18nEmpty: this.options.i18n['text:empty'],
+            estimateItemSize: { width: 34, height: 34 }, // tweak to your tile size
+            bufferRows: 4
+        });
+    }
+
     renderItem(icon) {
         // Customize how each icon renders
         const btn = document.createElement('button');
@@ -69,23 +87,6 @@ export default class IconPicker {
         return btn;
     }
 
-    _preBuild() {
-        this.element = _.resolveElement(this.element);
-        this.root = template(this.options);
-
-        if (!Array.isArray(this.options.iconSource) && this.options.iconSource.length > 0) {
-            this.options.iconSource = [this.options.iconSource];
-        }
-        // Prepare (lazy) virtual grid; mount after modal becomes visible to get correct widths
-        this.virtualIconGrid = this.virtualIconGrid || new VirtualIconGrid({
-            container: this.root.content,
-            items: this.availableIcons ?? [],
-            renderItem: (icon) => this.renderItem(icon),
-            i18nEmpty: this.options.i18n['text:empty'],
-            estimateItemSize: { width: 32, height: 32 }, // tweak to your tile size
-            bufferRows: 4
-        });
-    }
 
     ensureVirtualMounted = () => {
         // If modal just opened, wait a frame so it has layout/width

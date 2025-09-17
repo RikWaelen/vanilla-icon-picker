@@ -1,6 +1,6 @@
 {
   "name": "vanilla-icon-picker-virtualized",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Icon picker - Vanilla JS icon picker with virtualization",
   "keywords": [
     "ux",
@@ -10,6 +10,18 @@
     "icon-picker"
   ],
   "main": "./dist/icon-picker.min.js",
+  "module": "./dist/icon-picker.esm.js",
+  "source": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/icon-picker.esm.js",
+      "require": "./dist/icon-picker.min.js",
+      "default": "./dist/icon-picker.min.js"
+    },
+    "./style.css": "./dist/icon-picker.css",
+    "./themes/bootstrap-5.min.css": "./dist/themes/bootstrap-5.min.css",
+    "./themes/default.min.css": "./dist/themes/default.min.css"
+  },
   "typings": "./types/IconPicker.d.ts",
   "author": "Simon <simon@appolo.fr>",
   "contributors": [

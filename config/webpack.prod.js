@@ -42,14 +42,12 @@ const TerserPlugin = require("terser-webpack-plugin");
         ]
     })
 
-    // JS
+    // JS UMD
     await webpack({
         mode: 'production',
-
         entry: {
             'icon-picker.min': path.resolve('./src/js/IconPicker.js')
         },
-
         output: {
             path: path.resolve('./dist'),
             library: {
@@ -58,14 +56,41 @@ const TerserPlugin = require("terser-webpack-plugin");
                 type: 'umd2'
             }
         },
-
         plugins: [
             banner,
             new webpack.SourceMapDevToolPlugin({
                 filename: 'icon-picker.min.map'
             })
         ],
+        optimization: {
+            minimizer: [
+                new TerserPlugin({
+                    extractComments: false
+                })
+            ]
+        }
+    })
 
+    // JS ESM
+    await webpack({
+        mode: 'production',
+        entry: {
+            'icon-picker.esm': path.resolve('./src/js/IconPicker.js')
+        },
+        output: {
+            path: path.resolve('./dist'),
+            filename: 'icon-picker.esm.js',
+            library: {
+                type: 'module'
+            },
+            module: true
+        },
+        experiments: {
+            outputModule: true
+        },
+        plugins: [
+            banner
+        ],
         optimization: {
             minimizer: [
                 new TerserPlugin({

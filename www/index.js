@@ -37,7 +37,14 @@ iconPickerInput.on('select', (icon) => {
 // Icon picker with `default` theme
 const iconPickerButton = new IconPicker('.btn', {
     theme: 'default',
-    iconSource: ['FontAwesome Brands 6', 'FontAwesome Solid 6', 'FontAwesome Regular 6'],
+        iconSource: [
+        {
+            key: 'Material Symbols',
+            prefix: 'md md-',
+            url: 'https://raw.githubusercontent.com/iconify/icon-sets/master/json/material-symbols.json'
+        }
+    ],
+    // iconSource: ['FontAwesome Brands 6', 'FontAwesome Solid 6', 'FontAwesome Regular 6'],
     closeOnSelect: true
 });
 
