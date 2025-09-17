@@ -78,12 +78,10 @@ export default class IconPicker {
         // Customize how each icon renders
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `icon-element ${icon.value}`; // keep your class for styles
+        btn.className = `icon-element ${icon.value}`; 
         btn.title = icon.value;
         btn.setAttribute('aria-label', icon.value);
-        // Example inner content; adjust to your icon system
         btn.innerHTML = icon.body;
-        // Selection behavior
         btn.addEventListener('click', (evt) => icon.onSelect && icon.onSelect(evt));
         
         return btn;
@@ -347,6 +345,7 @@ export default class IconPicker {
                 this._setValueInput();
             }
         }
+        this.ensureVirtualMounted(); 
 
         const loadingElement = root.content.querySelector('.is-loading');
         if (loadingElement) {

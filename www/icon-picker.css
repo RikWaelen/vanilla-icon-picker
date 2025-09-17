@@ -19,5 +19,11 @@ body {
 }
 .virtual-scroll { overflow: auto; position: relative; }
 .vs-inner { position: relative; width: 100%; }
-.vs-item { position: absolute; }
 .is-empty { padding: 1rem; color: #666; }
+.vs-item {
+    position: absolute;
+    background: #fafbfc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

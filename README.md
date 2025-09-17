@@ -5,10 +5,10 @@ https://github.com/AppoloDev/vanilla-icon-picker
 
 # Vanilla icon picker
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/appolodev/icon-picker?color=blue&style=flat-square)
-![npm](https://img.shields.io/npm/dm/vanilla-icon-picker?color=%2325b5ba&style=flat-square)
-![GitHub](https://img.shields.io/github/license/appolodev/icon-picker?style=flat-square)
-[![pages-build-deployment](https://github.com/AppoloDev/vanilla-icon-picker/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/AppoloDev/vanilla-icon-picker/actions/workflows/pages/pages-build-deployment)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/RikWaelen/vanilla-icon-picker?color=blue&style=flat-square)
+![npm](https://img.shields.io/npm/dm/vanilla-icon-picker-virtualized?color=%2325b5ba&style=flat-square)
+![GitHub](https://img.shields.io/github/license/RikWaelen/icon-picker?style=flat-square)
+<!-- [![pages-build-deployment](https://github.com/RikWaelen/vanilla-icon-picker/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/AppoloDev/vanilla-icon-picker/actions/workflows/pages/pages-build-deployment) -->
 
 ### Icons includes:
 
@@ -21,27 +21,27 @@ https://github.com/AppoloDev/vanilla-icon-picker
 ➡️ Using a package manager
 
 ```bash
-npm i vanilla-icon-picker
+npm i vanilla-icon-picker-virtualized
 ```
 ```js
 // One of the following themes
-import 'vanilla-icon-picker/dist/themes/default.min.css'; // 'default' theme
-import 'vanilla-icon-picker/dist/themes/bootstrap-5.min.css'; // 'bootstrap-5' theme
+import 'vanilla-icon-picker/themes/default.min.css'; // 'default' theme
+import 'vanilla-icon-picker/themes/bootstrap-5.min.css'; // 'bootstrap-5' theme
 
-import IconPicker from 'vanilla-icon-picker';
+import IconPicker from 'vanilla-icon-picker-virtualized';
 ```
 
 > ⚠️ Attention: If you use bootstrap theme don't forget to include bootstrap 5 css.
 
 ➡️ Using script
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vanilla-icon-picker@1.3.1/dist/icon-picker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanilla-icon-picker-virtualized@0.0.6/dist/icon-picker.min.js"></script>
 ```
 
 and stylesheet
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-icon-picker@1.3.1/dist/themes/default.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-icon-picker@1.3.1/dist/themes/bootstrap-5.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-icon-picker-virtualized@0.0.6/dist/themes/default.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-icon-picker-virtualized@0.0.6/dist/themes/bootstrap-5.min.css">
 ```
 
 ## Usage
@@ -52,7 +52,7 @@ const iconPicker = new IconPicker('input', {
 });
 ```
 
-[Live demo →](https://appolodev.github.io/vanilla-icon-picker/)
+[Live demo →](https://rikwaelen.github.io/vanilla-icon-picker/)
 
 ## Options
 
