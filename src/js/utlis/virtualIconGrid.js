@@ -53,7 +53,9 @@ export default class VirtualIconGrid {
     items,
     renderItem,
     i18nEmpty = 'No results',
-    estimateItemSize = { width: 24, height: 24 },
+    estimateItemSize = { width: 42, height: 42 },
+    gaps = { x: 6, y: 6 },
+
     bufferRows = 3
   }) {
     if (!container) throw new Error('VirtualIconGrid: container is required');
@@ -73,8 +75,8 @@ export default class VirtualIconGrid {
     this._cols = 1;
     this._itemW = this.estimate.width;
     this._itemH = this.estimate.height;
-    this._gapX = 8; // horizontal gap guess; refined via measurement
-    this._gapY = 8; // vertical gap guess
+    this._gapX = gaps.x; // horizontal gap guess; refined via measurement
+    this._gapY = gaps.y; // vertical gap guess
     this._mounted = false;
     this._onScroll = this._onScroll.bind(this);
     this._onResize = this._onResize.bind(this);
@@ -204,26 +206,10 @@ export default class VirtualIconGrid {
     sample.style.visibility = 'hidden';
     sample.classList.add('vs-item');
 
-    // Place within inner to measure CSS-driven size
-    this._inner.appendChild(sample);
-    // Allow layout
-    const rect = sample.getBoundingClientRect();
-    const style = window.getComputedStyle(sample);
-
-    // Fallbacks if 0
-    const w = Math.max(rect.width, this.estimate.width);
-    const h = Math.max(rect.height, this.estimate.height);
-
-    // Try to infer gaps from margin
-    const mx = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
-    const my = parseFloat(style.marginTop) + parseFloat(style.marginBottom);
-
-    this._itemW = Math.round(w);
-    this._itemH = Math.round(h);
-    this._gapX = isFinite(mx) ? Math.max(0, Math.round(mx)) : this._gapX;
-    this._gapY = isFinite(my) ? Math.max(0, Math.round(my)) : this._gapY;
-
-    sample.remove();
+  // Ignore measured size, always use configured estimateItemSize for robust layout
+  this._itemW = this.estimate.width;
+  this._itemH = this.estimate.height;
+  sample.remove();
   }
 
   _computeLayout() {
@@ -293,11 +279,10 @@ export default class VirtualIconGrid {
 
       const el = this.renderItem(data);
       el.classList.add('vs-item');
-      // Absolutely position into the inner surface
       el.style.transform = `translate(${x}px, ${y}px)`;
       el.style.width = this._itemW + 'px';
       el.style.height = this._itemH + 'px';
-
+  
       frag.appendChild(el);
     }
 

@@ -96,17 +96,12 @@
         }
 
         .icon-element {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
 
             border: 1px solid $icon-element-border;
             border-radius: $icon-element-border-radius;
 
-            background-color: transparent;
-
-            height: 40px;
-            width: 40px;
+            /* No padding or background here, let JS control size and gap */
 
             cursor: pointer;
 
@@ -151,5 +146,11 @@
 
 .virtual-scroll { overflow: auto; position: relative; }
 .vs-inner { position: relative; width: 100%; }
-.vs-item { position: absolute; }
 .is-empty { padding: 1rem; color: #666; }
+// .vs-item { position: absolute; }
+.vs-item {
+    background: #fafbfc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

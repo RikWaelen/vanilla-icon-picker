@@ -19,7 +19,9 @@ export default class IconPicker {
             'text:loading' : 'Loading…',
 
             'btn:save': 'Save'
-        }
+        },
+        itemSize: 50, // px
+        iconSize: 32, // px
     }
 
     _eventListener = {
@@ -67,7 +69,7 @@ export default class IconPicker {
             items: this.availableIcons ?? [],
             renderItem: (icon) => this.renderItem(icon),
             i18nEmpty: this.options.i18n['text:empty'],
-            estimateItemSize: { width: 34, height: 34 }, // tweak to your tile size
+            estimateItemSize: { width: this.options.itemSize, height: this.options.itemSize }, // tweak to your tile size
             bufferRows: 4
         });
     }
@@ -289,8 +291,8 @@ export default class IconPicker {
                     iconElement = t.content;
                 } else {
                     iconElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                    iconElement.setAttribute('height', '24');
-                    iconElement.setAttribute('width', '24');
+                    iconElement.setAttribute('height', (this.options.iconSize).toString());
+                    iconElement.setAttribute('width', (this.options.iconSize).toString());
                     iconElement.setAttribute('viewBox', `0 0 ${value.width ? value.width : library.width} ${value.height ? value.height : library.height}`);
                     iconElement.innerHTML = value.body;
                 }
