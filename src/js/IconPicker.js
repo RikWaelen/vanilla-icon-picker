@@ -81,6 +81,7 @@ export default class IconPicker {
         btn.className = `icon-element ${icon.value}`; 
         btn.title = icon.value;
         btn.setAttribute('aria-label', icon.value);
+        btn.dataset.value = icon.inputValue
         btn.innerHTML = icon.body;
         btn.addEventListener('click', (evt) => icon.onSelect && icon.onSelect(evt));
         
@@ -295,7 +296,7 @@ export default class IconPicker {
                     iconElement.innerHTML = value.body;
                 }
 
-                this.availableIcons.push({value: key, body: iconElement.outerHTML, ...(categories?.length > 0 && {categories}), onSelect: (evt) => {
+                this.availableIcons.push({inputValue: library.prefix + key, value: key, body: iconElement.outerHTML, ...(categories?.length > 0 && {categories}), onSelect: (evt) => {
                     if (this.currentlySelectName !== evt.currentTarget.firstChild.className) {
                         evt.currentTarget.classList.add('is-selected');
 
