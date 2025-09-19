@@ -1,6 +1,6 @@
 {
   "name": "vanilla-icon-picker-virtualized",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Icon picker - Vanilla JS icon picker with virtualization",
   "keywords": [
     "ux",
@@ -25,7 +25,8 @@
   "typings": "./types/IconPicker.d.ts",
   "author": "Simon <simon@appolo.fr>",
   "contributors": [
-    "Rik Waelen <>"
+    "RikWaelen",
+    "RobinErtz"
   ],
   "license": "MIT",
   "scripts": {
