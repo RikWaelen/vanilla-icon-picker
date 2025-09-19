@@ -228,6 +228,8 @@ export default class VirtualIconGrid {
     const rows = this._totalRows();
     const totalH = rows * (this._itemH + this._gapY) - this._gapY; // last row no gap
     this._inner.style.height = Math.max(0, totalH).toString() + 'px';
+    const scrollBarWidth = this._inner.parentElement.offsetWidth - this._inner.parentElement.clientWidth
+    this._inner.parentElement.style.width = Math.max(this._cols * (this._itemW + this._gapX) - this._gapX + scrollBarWidth) + 'px';
   }
 
   _onResize() {
